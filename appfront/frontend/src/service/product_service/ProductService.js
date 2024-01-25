@@ -22,7 +22,20 @@ export default
     },
     DeletProduct(id){
         return axios.delete(`/deleteProduit/${id}`);
-    }
+    },
+    UpdateProudct(product,id){
+
+        let data=new FormData();
+        data.append("nom",product.nom);
+        data.append("prix",product.prix);
+        data.append("photo",product.image);
+        const config={
+            Headers:{
+                "content-Type":"multipart/form-data"
+            }
+        }
+        return axios.post(`/UpdateProduct/${id}`,data,config)
+    },
 
 
 }
