@@ -1,7 +1,9 @@
 <template>
- 
-
-   <div class="p-5" style="width: 100% !important;">
+  <div>
+  <div v-if="product_id!=null">
+     <UpDateProduit :id="product_id" ></UpDateProduit>
+  </div>
+   <div v-else class="p-5" style="width: 100% !important;">
       <p class="titre text-center">List Menu</p>
       <button @click="changeView('Add')"  class="btn btn-primary">Add</button>
       <table class="table p-2">
@@ -27,19 +29,20 @@
                 <td><img :src="'http://localhost:8000'+product.image" alt="" width="100px"></td>
                 <td>
                      <button class="btn btn-danger mx-2" @click="Deletproduct(product.id)" >Delete</button>
-                     <button class="btn btn-warning">Update</button>
+                     <button class="btn btn-warning" @click="edit(product.id)">Update</button>
                 </td>
               </tr>
           </tbody>
-   
       </table>
    </div>
-    </template>
+  </div>
+</template>
 
 
 <script>
 import ProductService from "@/service/product_service/ProductService.js";
-import PoructService from "@/service/product_service/ProductService.js"
+import UpDateProduit from "./UpDateProduit.vue";
+
 export default {
     name:"ListView",
     created(){
@@ -47,7 +50,8 @@ export default {
     },
     data(){
       return {
-        products:[]
+        products:[],
+        product_id:null
       }
     },
     methods:{
@@ -55,7 +59,7 @@ export default {
         this.$emit("changeView",data);
       },
       getProducts(){
-        PoructService.getProducts().then((res)=>{
+        ProductService.getProducts().then((res)=>{
           this.products=res.data.data;
         })
       },
@@ -63,7 +67,13 @@ export default {
         ProductService.DeletProduct(id).then((res)=>{
           this.getProducts();
         })
+      },
+      edit(id){
+        this.product_id=id;
       }
+    },
+    components:{
+      UpDateProduit
     }
 }
 </script>

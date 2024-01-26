@@ -3,12 +3,12 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                <a class="navbar-brand" href="#!">Les Ciments De Bizerte</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">notifications</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -46,15 +46,15 @@
                     
                     
                    
-                    <div class="col mb-5">
+                    <div class="col mb-5"  v-for="product in products" :key="product.id" >
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img :src="'http://localhost:8000'+product.image" alt="" width="100px">
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">Popular Item</h5>
+                                    <h5 class="fw-bolder">{{ product.nom }}</h5>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
                                         <div class="bi-star-fill"></div>
@@ -64,7 +64,7 @@
                                         <div class="bi-star-fill"></div>
                                     </div>
                                     <!-- Product price-->
-                                    $40.00
+                                    {{ product.prix }} TND
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -82,4 +82,27 @@
         </footer>
       </div>
 </template>
+<script>
+import ProductService from "@/service/product_service/ProductService.js";
+
+export default {
+    name:"ListView",
+    created(){
+      this.getProducts();
+    },
+    data(){
+      return {
+        products:[]
+      }
+    },
+    methods:{
+        getProducts(){
+        ProductService.getProducts().then((res)=>{
+          this.products=res.data.data;
+        })
+      }
+    }
+}
+
+</script>
 

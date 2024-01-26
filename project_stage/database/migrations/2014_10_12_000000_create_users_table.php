@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('num_tlf');
             $table->string('image');
+            $table->boolean('IsAdmin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

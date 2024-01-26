@@ -29,13 +29,17 @@ export default
         data.append("nom",product.nom);
         data.append("prix",product.prix);
         data.append("photo",product.image);
+        data.append("uploadphoto",product.upload);
         const config={
-            Headers:{
-                "content-Type":"multipart/form-data"
-            }
+       Headers:{
+       "content-Type":"multipart/form-data"
         }
-        return axios.post(`/UpdateProduct/${id}`,data,config)
-    },
+      }
+    return axios.post(`/UpdateProduit/${id}`,data,config)
+   },
 
+   getProductById(id){
+     return axios.get(`/getProduitById/${id}`);
+   }
 
 }

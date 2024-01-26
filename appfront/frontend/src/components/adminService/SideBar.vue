@@ -12,6 +12,24 @@
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
                   Products
         </a>
+        <br>
+        
+       
+      </li>
+      <li class="nav-item" >
+        <a  class="nav-link active" aria-current="page" @click="changeView('Consulte')">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                  Commandes
+        </a>
+        <br>
+      
+        
+      </li>
+      <li class="nav-item" >
+        <a  class="nav-link active" aria-current="page" @click="changeView('user')">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                  Users
+        </a>
       </li>
     </ul>
     <hr>

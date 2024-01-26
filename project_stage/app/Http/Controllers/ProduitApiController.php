@@ -38,18 +38,35 @@ class ProduitApiController extends Controller
         }
     }
     public function UpdateProduit(Request $request, $id){
+
         $produits=produit::find($id);
-        $produits->update([
-            "nom"=>$request->nom,
-            "prix"=>$request->prix,
-            "image">$request->image
-        ]);
+
+        if($request->uploadphoto){
+            $file_name = time() . '_' . $request->photo->getClientOriginalName();
+            $image = $request->file('photo')->storeAs('images', $file_name, 'public');
+
+            $produits->update([
+                "nom"=>$request->nom,
+                "prix"=>$request->prix,
+                'image'=>'/storage/' . $image,
+            ]);
+
+        }else{
+
+            $produits->update([
+                "nom"=>$request->nom,
+                "prix"=>$request->prix,
+            ]);
+
+        }
+      
         return response()->json(["message"=>"Update Produit terminé"],200);
     }
     public function getProduitById($id){
         $produits=produit::find($id);
         return response()->json(["data"=>$produits],200);
     }
+    
     
     //
 }

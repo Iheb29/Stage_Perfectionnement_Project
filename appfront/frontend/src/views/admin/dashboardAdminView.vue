@@ -5,8 +5,11 @@
             <div v-if="view=='Consulte'" class="w-100">
                 <ListProduct  @changeView="changeView"></ListProduct>
             </div>
-            <div v-else="view=='add'">
+            <div v-else-if="view=='add'">
                 <AddProduct  @changeView="changeView"></AddProduct>
+            </div>
+            <div v-else-if="view=='user'">
+                <ListUser></ListUser>
             </div>
         </div>
     </div>
@@ -16,6 +19,7 @@
 import ListProduct from "../../components/adminService/listProducts.vue"
 import AddProduct from "../../components/adminService/AddProduit.vue"
 import SideBar from "../../components/adminService/SideBar.vue";
+import ListUser from "@/components/adminService/listUser.vue";
     export default {
         data(){
             return {
@@ -28,7 +32,7 @@ import SideBar from "../../components/adminService/SideBar.vue";
             }
         },
         components :{
-            SideBar,AddProduct,ListProduct
+            SideBar,AddProduct,ListProduct,ListUser
         }
     }
 </script>

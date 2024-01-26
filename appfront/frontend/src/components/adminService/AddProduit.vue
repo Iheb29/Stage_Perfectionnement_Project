@@ -1,5 +1,5 @@
 <template>
-<div class="all container">
+<div class="all container" width="100%" height="100%">
     <div class="card shadow-lg mt-3">
         <h3 style="text-align: center;">add product</h3>
     </div>
