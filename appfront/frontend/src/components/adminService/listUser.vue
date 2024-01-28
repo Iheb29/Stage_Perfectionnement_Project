@@ -1,7 +1,7 @@
 <template>
     <div class="p-5" style="width: 100% !important;">
       <p class="titre text-center">List Personnes</p>
-      <table class="table p-2">
+      <table class="table p-2" >
           <thead>
               <tr>
                 <th>Id</th>

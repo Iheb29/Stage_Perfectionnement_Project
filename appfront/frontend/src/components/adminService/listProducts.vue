@@ -5,7 +5,7 @@
   </div>
    <div v-else class="p-5" style="width: 100% !important;">
       <p class="titre text-center">List Menu</p>
-      <button @click="changeView('Add')"  class="btn btn-primary">Add</button>
+      <button @click="changeView('add')"  class="btn btn-primary">Add</button>
       <table class="table p-2">
           <thead>
               <tr>

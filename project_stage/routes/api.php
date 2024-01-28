@@ -1,7 +1,9 @@
 <?php
+use App\Http\Controllers\logincontroller;
 use App\Http\Controllers\ProduitApiController;
 use App\Http\Controllers\CommandeApiController;
 use App\Http\Controllers\UserApiController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +42,4 @@ route::delete('/deleteUser/{id}',[UserApiController::class,'deleteUSer']);
 Route::put('/UpdateUser/{id}', [UserApiController::class,'UpdateCommande']);
 Route::get('/getUserById/{id}',[UserApiController::class,'getUserById']);
 
-
+route::post('/login',[logincontroller::class,'LoginUser']);
