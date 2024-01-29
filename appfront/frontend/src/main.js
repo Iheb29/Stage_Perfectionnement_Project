@@ -5,6 +5,11 @@ import router from './router'
 import store from './store'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
+import "bootstrap/js/src/dropdown";
+import "bootstrap/js/src/modal";
 
 Vue.config.productionTip = false
 Vue.use(PiniaVuePlugin)
