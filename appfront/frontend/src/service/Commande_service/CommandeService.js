@@ -9,4 +9,7 @@ export default
     DeletCommande(id){
         return axios.delete(`/deleteCommande/${id}`);
     },
+    AddCommande(data){
+        return axios.post("/addCommande",data);
+    }
 }

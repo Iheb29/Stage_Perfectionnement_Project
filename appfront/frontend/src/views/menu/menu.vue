@@ -1,7 +1,6 @@
 <template>
   <div>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="#!">Les Ciments De Bizerte</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -19,13 +18,120 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
+                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">
+                                {{ CountProducts }}
+                            </span>
                         </button>
-                    </form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <section class="h-100 h-custom" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card">
+          <div class="card-body p-4">
+
+            <div class="row">
+
+              <div class="col-lg-7">
+                <h5 class="mb-3"><a href="#!" class="text-body"><i
+                      class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <div>
+                    <p class="mb-1">Shopping cart</p>
+                    <p class="mb-0">You have {{ CountProducts }} items in your cart</p>
+                  </div>
+                </div>
+
+                <div class="card mb-3" v-for="product in StoreProducts" :key="product">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex flex-row align-items-center">
+                        <div>
+                          <img
+                            :src="'http://localhost:8000'+product.product.image"
+                            class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                        </div>
+                        <div class="ms-3">
+                          <h5>{{product.product.nom}}</h5>
+                          <p class="small mb-0">{{ product.product.prix }} TND</p>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-row align-items-center">
+                        <div style="width: 50px;">
+                          <h5 class="fw-normal mb-0"> Qte : {{ product.qte }}</h5>
+                        </div>
+                        <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+
+                <div class="card bg-primary text-white rounded-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <h5 class="mb-0">Card details</h5>
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                        class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
+                    </div>
+
+                  
+
+                   
+
+                    <hr class="my-4">
+
+                
+                    
+
+                    <div class="d-flex justify-content-between mb-4">
+                      <p class="mb-2">Total(Incl. taxes)</p>
+                      <p class="mb-2">{{ total }}</p>
+                    </div>
+
+                    <button type="button" class="btn btn-info btn-block btn-lg" @click="AddCommande()">
+                      <div class="d-flex justify-content-between" >
+                          <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                      </div>
+                    </button>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
                 </div>
             </div>
         </nav>
@@ -39,7 +145,7 @@
             </div>
         </header>
         <!-- Section-->
-        <section class="py-5">
+        <section class="py-5" v-if="ShowAddCommande==0">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     
@@ -69,12 +175,15 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                                <div @click="AddProducts(product)" class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+        <section v-else style="height: 100vh;">
+          <AddCommandeVue :prix_total="total"></AddCommandeVue>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
@@ -84,23 +193,69 @@
 </template>
 <script>
 import ProductService from "@/service/product_service/ProductService.js";
-
+import {AuthStore} from "../../store/index.js"
+import AddCommandeVue from "../../components/ClientService/AddCommande.vue"
 export default {
     name:"ListView",
+  setup(){
+    const store=AuthStore();
+    return {store}
+  },
     created(){
       this.getProducts();
+      this.GetStoreProducts();//??
     },
     data(){
       return {
-        products:[]
+        products:[],
+        StoreProducts:[],
+        ShowAddCommande:0
       }
     },
     methods:{
+        GetStoreProducts(){
+            this.StoreProducts=JSON.parse(localStorage.getItem("products"))??[];//??
+        },
+        AddProducts(product){
+            let index=this.StoreProducts.findIndex((v)=>v.product.id==product.id);
+            if(index!=-1){
+                this.StoreProducts[index].qte++;
+            }else{
+                this.StoreProducts.push({
+                    "product":product,
+                    "qte":1
+                })
+                localStorage.setItem("products",JSON.stringify(this.StoreProducts));
+            }
+        },
+        AddCommande(){
+          if(this.store.isauth){
+            this.ShowAddCommande=1;
+          }else{
+            alert("Your Are Not Authentifié");
+          }
+        },
         getProducts(){
         ProductService.getProducts().then((res)=>{
           this.products=res.data.data;
         })
       }
+    },
+    computed:{
+        CountProducts(){
+            return this.StoreProducts.length;
+        },
+        total(){
+            let total=0;
+            this.StoreProducts.forEach((v)=>{
+                total+=v.product.prix * v.qte;
+            })
+            return total ; 
+
+        }
+    },
+    components:{
+      AddCommandeVue
     }
 }
 
