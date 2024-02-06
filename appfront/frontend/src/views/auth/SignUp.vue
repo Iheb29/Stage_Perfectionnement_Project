@@ -19,7 +19,7 @@
             <div class="mb-4">
               <input
                 type="text"
-                placeholder="Nom..."
+                placeholder="Name..."
                 v-model="nom"
                 class="form-control rounded-pill p-4"
                 id="exampleInputNom"
@@ -28,7 +28,7 @@
             <div class="mb-4">
               <input
                 type="text"
-                placeholder="Prenom..."
+                placeholder="LastName..."
                 v-model="prenom"
                 class="form-control rounded-pill p-4"
                 id="exampleInputPrenom"
@@ -37,7 +37,7 @@
             <div class="mb-4">
               <input
                 type="text"
-                placeholder="Entrer Email Address..."
+                placeholder="Email Address..."
                 v-model="email"
                 class="form-control rounded-pill p-4"
                 id="exampleInputEmail1"
@@ -55,7 +55,7 @@
             <div class="mb-5">
               <input
                 type="text"
-                placeholder="Entrer Number Phone..."
+                placeholder=" Phone Number..."
                 v-model="num_tlf"
                 class="form-control rounded-pill p-4"
                 id="exampleInputEmail1"

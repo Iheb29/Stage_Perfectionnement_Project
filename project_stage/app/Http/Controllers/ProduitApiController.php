@@ -12,6 +12,10 @@ class ProduitApiController extends Controller
         return response()->json(["data"=>$produits],200);
     }
 
+    public function getLatestProduct(){
+        $produits=produit::orderBy('created_at', 'desc')->take(3)->get();
+        return response()->json(["data"=>$produits],200);
+    }
     public function addProduit(Request $request){
 
         $file_name = time() . '_' . $request->photo->getClientOriginalName();

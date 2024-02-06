@@ -11,6 +11,6 @@ class produit extends Model
     protected $guarded=[];
 
     public function lignecommande(){
-        $this->hasMany(ligneCommande::class);
+       return $this->hasMany(ligneCommande::class);
      }
 }

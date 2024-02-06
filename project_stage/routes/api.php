@@ -27,14 +27,17 @@ Route::post('/addProduct',[ProduitApiController::class,'addProduit']);
 route::delete('/deleteProduit/{id}',[ProduitApiController::class,'deleteProduit']);
 Route::post('/UpdateProduit/{id}', [ProduitApiController::class,'UpdateProduit']);
 Route::get('/getProduitById/{id}',[ProduitApiController::class,'getProduitById']);
+Route::get('/getLatestProduct',[ProduitApiController::class,'getLatestProduct']);
 
 
-Route::get('/Commandes',[CommandeApiController::class,'getCommandes']);
+Route::get('/getCommandes',[CommandeApiController::class,'getCommandes']);
+Route::get('/getMyCommandes/{id}',[CommandeApiController::class,'getMyCommandes']);
 Route::post('/addCommande',[CommandeApiController::class,'addCommande']);
 route::delete('/deleteCommande/{id}',[CommandeApiController::class,'deleteCommande']);
 Route::put('/UpdateCommande/{id}', [CommandeApiController::class,'UpdateCommande']);
 Route::get('/getCommandeById/{id}',[CommandeApiController::class,'getCommandeById']);
-
+Route::put('/AccepteCommande/{id}',[CommandeApiController::class,'AccepteCommande']);
+Route::put('/RejectComande/{id}',[CommandeApiController::class,'RejectComande']);
 
 Route::get('/Users',[UserApiController::class,'getUsers']);
 Route::post('/addUser',[UserApiController::class,'addUser']);

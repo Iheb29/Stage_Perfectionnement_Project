@@ -4,14 +4,14 @@
     <sectionCompo /> -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
-              <a href=""><img src="../assets/cimenterie.jpg" width="120px" border-radius=70% alt=""></a> <!-- <a class="navbar-brand" href="#page-top">Start Bootstrap</a> -->
+              <a href=""><img src="../assets/cimenterie.jpg" width="120px" style="border-radius:70%"  alt=""></a> 
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Location</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Top 3 Products</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#location">Location</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#top">Last 3 Products</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                         
                     </ul>
@@ -29,7 +29,13 @@
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">Les Ciments de Bizerte est une société anonyme fondée en 1952. Elle est spécialisée dans la production de clinker, de divers types de ciment et de chaux hydraulique.</p>
                         <router-link to="/signup"><button class="btn btn-primary ">Signup</button></router-link>
-                         <router-link to="/signin"><button class="btn btn-secondry  ">SignIn</button></router-link>
+                         <router-link to="/signin"><button class="btn btn-secondary  ">SignIn</button></router-link>
+                    </div>
+                    <div class="text-center">
+                      <router-link to="/menu">
+                        <button class="btn btn-outline-info">Voir Menu</button>
+
+                      </router-link>
                     </div>
                 </div>
             </div>
@@ -37,33 +43,33 @@
         <!-- About-->
         
         <!-- Services-->
-        <div id="services">
+        <div id="services" class="mt-5">
           <serviceCompo />
         </div>
         
         <!-- Portfolio-->
-        <div id="portfolio">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="../assets/imagehome2.jpg" title="Project Name">
-                            <img class="img-fluid" src="../assets/logo.png"  />
+        <div id="portfolio m-2 container top" >
+          <h2 class="text-center mb-4">Last Products</h2>
+            <div class="containe p-0">
+              <div v-if="load" class="text-center">
+                   <div class="spinner-border text-primary" role="status">
+                  </div>
+              </div>
+                <div class="row g-0 text-center" v-else>
+                    <div class="col-lg-4 col-sm-6" v-for="prod in Product" :key="prod.id">
+                        <div class="portfolio-box"  title="Project Name">
+                            <img class="img-fluid" width="200px" :src="'http://localhost:8000'+prod.image"  />
                             <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
+                                 <div>{{ prod.nom }}</div>
+                                <div class="project-name">{{prod.prix}}</div>
                             </div>
-                        </a>
+                          </div>
                     </div>
-                    
-                    
-                   
-                   
-                   
                 </div>
             </div>
         </div>
         <!-- Call to action-->
-        <section class="page-section bg-dark text-white">
+        <section class="page-section bg-dark text-white" id="location">
           <div class="map-container">
                 <h1 style="color:#fff !important" class="text-light">Location</h1>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3174.775007038631!2d9.859289981929834!3d37.27676206880938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e31f08aeb072a3%3A0x95f7f0a50ce2758c!2sLes%20Ciments%20de%20Bizerte!5e0!3m2!1sfr!2stn!4v1705950436445!5m2!1sfr!2stn" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -88,9 +94,27 @@
 import sectionCompo from '@/components/section.vue';
 import contactCompo from '@/components/contact.vue';
 import serviceCompo from '@/components/service.vue';
+import ProductService from '@/service/product_service/ProductService';
 
 export default {
   name: 'HomeView',
+  created(){
+    this.getproduct();
+  },
+  data(){
+    return {
+      load:true,
+      Product:[]
+    }
+  },
+  methods:{
+    getproduct(){
+      ProductService.getProudctLatest().then((res)=>{
+         this.load=false;
+         this.Product=res.data.data;
+      })
+    }
+  },
   components: {
     sectionCompo,
     contactCompo,

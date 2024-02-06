@@ -6,25 +6,35 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                      <RouterLink to="/">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                    
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
+                      </RouterLink>
+                       
                     </ul>
                         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="bi-cart-fill me-1"></i>
-                            Cart
+                           
+                            
+                            <i  class="material-icons mx-2">shopping_cart</i>
                             <span class="badge bg-dark text-white ms-1 rounded-pill">
                                 {{ CountProducts }}
                             </span>
                         </button>
+        <div class="dropdown text-end mx-2" v-if="store.isauth">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img :src="'http://localhost:8000'+store.user['image']" alt="photo user" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+            <li ><a class="dropdown-item" href="#" >
+                 {{store.user['nom'] +' '+store.user['prenom']}}
+            </a></li>
+            <li @click="ShowAddCommande=2"><a class="dropdown-item" href="#" >
+                  My Commandes
+            </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li @click="Logout()"><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+        </div>
 
 
 <!-- Modal -->
@@ -32,7 +42,7 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Achat</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -87,19 +97,10 @@
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                       <h5 class="mb-0">Card details</h5>
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                       <img  v-if="store.isauth" :src="'http://localhost:8000'+store.user['image']"
                         class="img-fluid rounded-3" style="width: 45px;" alt="Avatar">
                     </div>
-
-                  
-
-                   
-
                     <hr class="my-4">
-
-                
-                    
-
                     <div class="d-flex justify-content-between mb-4">
                       <p class="mb-2">Total(Incl. taxes)</p>
                       <p class="mb-2">{{ total }}</p>
@@ -139,8 +140,8 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                    <h1 class="display-4 fw-bolder">Our Products</h1>
+                    <p class="lead fw-normal text-white-50 mb-0"></p>
                 </div>
             </div>
         </header>
@@ -182,19 +183,25 @@
                 </div>
             </div>
         </section>
-        <section v-else style="height: 100vh;">
+        <section v-else-if="ShowAddCommande==1" style="height: 100vh;">
           <AddCommandeVue :prix_total="total"></AddCommandeVue>
+        </section>
+        <section v-else style="height: 100vh;">
+<MyCommande></MyCommande>
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Les Ciments De Bizerte 2024</p></div>
         </footer>
       </div>
 </template>
 <script>
+
 import ProductService from "@/service/product_service/ProductService.js";
 import {AuthStore} from "../../store/index.js"
 import AddCommandeVue from "../../components/ClientService/AddCommande.vue"
+import { RouterLink } from "vue-router";
+import MyCommande from "@/components/ClientService/MyCommande.vue";
 export default {
     name:"ListView",
   setup(){
@@ -215,6 +222,10 @@ export default {
     methods:{
         GetStoreProducts(){
             this.StoreProducts=JSON.parse(localStorage.getItem("products"))??[];//??
+        },
+        Logout(){
+          this.store.logout();
+          this.$router.push({name:"signin"});
         },
         AddProducts(product){
             let index=this.StoreProducts.findIndex((v)=>v.product.id==product.id);
@@ -255,8 +266,10 @@ export default {
         }
     },
     components:{
-      AddCommandeVue
-    }
+    AddCommandeVue,
+    MyCommande,
+    RouterLink
+}
 }
 
 </script>

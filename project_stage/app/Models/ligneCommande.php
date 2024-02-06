@@ -11,9 +11,9 @@ class ligneCommande extends Model
     protected $guarded=[];
 
     public function commande(){
-        $this->belongsTo(commande::class);
+        return $this->belongsTo(commande::class);
     }
     public function produit(){
-        $this->belongsTo(produit::class);
+       return $this->belongsTo(produit::class);
     }
 }

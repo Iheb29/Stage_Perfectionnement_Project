@@ -12,11 +12,11 @@ class commande extends Model
     protected $guarded=[];
 
     public function lignecommande(){
-        $this->hasMany(ligneCommande::class);
+       return $this->hasMany(ligneCommande::class);
         
      }
      public function user(){
-        $this->belongsTo(User::class);
+       return $this->belongsTo(User::class);
      }
 
 }

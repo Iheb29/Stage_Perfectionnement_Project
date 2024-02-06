@@ -1,14 +1,13 @@
 <template>
-  <div>
+  <div class="container">
      
       <div v-if="confirm==0"
       >
       <h2>
-    Add Info Personnel
+       Add Commande
       </h2>
-              <form @submit.prevent="AddCommande()" style="margin: 50px">
+      <form @submit.prevent="AddCommande()" style="margin: 50px">
           <div class="mb-3">
-            <!-- <label class="form-label">Categorie name</label> -->
             <input
               type="text"
               name="nom"
@@ -28,19 +27,19 @@
             <input
               type="text"
               v-model="adresse_mail"
-              placeholder="Entrer Email Address..."
+              placeholder=" Email Address..."
               name="Email"
               class="form-control rounded-pill p-4"
             />
             <br />
             <input
               type="text"
-              placeholder="ville"
+              placeholder="City"
               v-model="ville"
               name="ville"
               class="form-control rounded-pill p-4"
             />
-            <br />
+           
 
           </div>
 
@@ -50,29 +49,20 @@
           <button type="reset" class="btn btn-danger">FERMER</button>
         </form>
       </div>
-      <div v-else-if="confirm==1" class="text-center py-5 mt-5"
-      >
-             <card
-                  class="mb-12"
-                  height="200px"
-                  style="padding:25px"
-                >
-                 <div style="font-size:18px;font-weight:600" class="mb-2 mt-2 text-center">
-                   Nom : {{ nom }}<br>
-                   Prenom : {{ prenom }} <br>
-                   Email  {{ adresse_mail }} <br>
-                   Ville : {{ ville }}
-                 </div>
-            </card>
-            <div class="text-center">
-            <button  @click="passCommande()" class="mx-5 mb-2" color="#000" style="color:#fff !important">
-                Valider Commande
-            </button>
-                <button @click="confirm=0">
-                  Fermer
-                </button>
-         </div>
-         </div>
+      
+         <div v-else-if="confirm==1" class="d-flex justify-items-center w-100 card text-center" >
+             <div class="card-header">Featured</div>
+               <div class="card-body">
+                     <h5 class="card-title"> Nom : {{ nom }} </h5>
+                               <br/>
+                     <h5 class="card-title"> Prenom : {{ prenom }}</h5>
+                     <h5 class="card-title"> Email: {{ adresse_mail }} </h5>
+                     <h5 class="card-title"> Ville: {{ ville }} </h5>
+                     <br/>
+                       <a  @click="passCommande()" href="#" class="btn btn-primary">Confirmer Commande !</a>
+               </div>
+              <button  @click="confirm=0" class="card-footer text-muted">Fermer</button>
+          </div>
       <div v-else class="text-center py-5 mt-5"
       >
                   MERCI POUR VOTRE COMMANDE !
@@ -80,9 +70,8 @@
                 Votre commande # est : {{ code_Commande }}.
                   <br>
                   Nous vous enverrons la confirmation de commande avec les détails et les informations de suivi.
-      </div>
+     </div> 
     </div>
-  </div>
 </template>
 
 <script>
@@ -127,8 +116,9 @@ export default {
             prix_total:this.prix_total
         }).then((res)=>{
             this.$confetti.start();
+            localStorage.removeItem("products");
             setTimeout(()=>this.$confetti.stop(),2000);
-            setTimeout(()=>this.$router.push({name:"menu"}),2500);
+            setTimeout(()=>this.$router.go(),2500);
         })
     },
     AddCommande(){
@@ -137,3 +127,6 @@ export default {
   },
 };
 </script>
+
+
+

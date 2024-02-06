@@ -40,6 +40,9 @@ export default
 
    getProductById(id){
      return axios.get(`/getProduitById/${id}`);
+   },
+   getProudctLatest(){
+    return axios.get("/getLatestProduct");
    }
 
 }

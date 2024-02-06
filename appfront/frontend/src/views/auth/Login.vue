@@ -19,7 +19,7 @@
 
 
                       <div class="mb-4">
-                          <input  type="text" placeholder="Entrer Email Address..." name="email" class="form-control rounded-pill p-4 " v-model="email" id="exampleInputEmail1">
+                          <input  type="text" placeholder=" Email Address..." name="email" class="form-control rounded-pill p-4 " v-model="email" id="exampleInputEmail1">
                         
                           
                       </div>
@@ -30,11 +30,8 @@
                           <button style="font-size:19px" type="submit" name="submit" class="btn btn-primary btn-block w-100 rounded-pill">Login</button>
                       </form>
                       <hr>
-                      <div class="fin text-center py-4 mb-1">
-                              <a  href="../forgetpassword">Forget Password ?</a>
-                       </div>
                        <div class="fin text-center">
-                              <a href="../signup">Create an Account !</a>
+                            <RouterLink to="/signup">Create an Account !</RouterLink> 
                       </div> 
                 </div>
           </div>
