@@ -39,17 +39,13 @@
               name="ville"
               class="form-control rounded-pill p-4"
             />
-           
-
           </div>
-
           <button type="submit" name="submit" class="btn btn-primary">
             CONTINUE
           </button>
           <button type="reset" class="btn btn-danger">FERMER</button>
         </form>
       </div>
-      
          <div v-else-if="confirm==1" class="d-flex justify-items-center w-100 card text-center" >
              <div class="card-header">Featured</div>
                <div class="card-body">
@@ -63,6 +59,7 @@
                </div>
               <button  @click="confirm=0" class="card-footer text-muted">Fermer</button>
           </div>
+         
       <div v-else class="text-center py-5 mt-5"
       >
                   MERCI POUR VOTRE COMMANDE !
@@ -75,6 +72,7 @@
 </template>
 
 <script>
+
 import Vue from 'vue'
 import VueConfetti from 'vue-confetti'
 Vue.use(VueConfetti)
@@ -122,11 +120,29 @@ export default {
         })
     },
     AddCommande(){
-      this.confirm=1;
+      this.confirm=1;   
     }
   },
 };
 </script>
+
+<style>
+.map-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.map-frame {
+  height:500px;
+}
+
+#map {
+  height: 100%;
+}
+</style>
 
 
 

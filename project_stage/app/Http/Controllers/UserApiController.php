@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\notification;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -55,5 +56,9 @@ class UserApiController extends Controller
         $users=User::find($id);
         return response()->json(["data"=>$users],200);
     }
-    //
+
+    public function GetNotif($id){
+        $notifs=notification::where("user_id",$id)->get();
+        return response()->json(["data"=>$notifs],200);
+    }
 }

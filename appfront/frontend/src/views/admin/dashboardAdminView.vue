@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex">
             <SideBar @changeView="changeView" :view="view"></SideBar>
-            <div v-if="view=='Consulte'" class="w-100">
+                <div v-if="view=='Consulte'" class="w-100">
                 <ListProduct  @changeView="changeView"></ListProduct>
             </div>
             <div v-else-if="view=='add'" class="w-100">

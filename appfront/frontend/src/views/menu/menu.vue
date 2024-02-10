@@ -35,7 +35,20 @@
             <li @click="Logout()"><a class="dropdown-item" href="#">Sign out</a></li>
           </ul>
         </div>
-
+        <div class="dropstart mx-2">
+  <div  class="notif position-relative"  data-bs-toggle="dropdown" aria-expanded="false">
+    <i  class="material-icons mx-2">notifications</i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" >
+    {{Notifications.length}}
+  </span>
+  </div>
+  <ul class="dropdown-menu Scroll_contianer"  v-if="Notifications!=''">
+    <li v-for="Notification in Notifications" :key="Notification.id"><a class="dropdown-item" href="#">{{Notification.message}}</a></li>
+  </ul>
+  <ul class="dropdown-menu " v-else >
+    <li ><a class="dropdown-item" href="#">Empty Notifications</a></li>
+  </ul>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -202,27 +215,40 @@ import {AuthStore} from "../../store/index.js"
 import AddCommandeVue from "../../components/ClientService/AddCommande.vue"
 import { RouterLink } from "vue-router";
 import MyCommande from "@/components/ClientService/MyCommande.vue";
+import NotifService from "../../service/user_service/UserService.js"
 export default {
     name:"ListView",
   setup(){
     const store=AuthStore();
     return {store}
+  }, 
+  mounted(){
+    window.Echo.channel('public').listen('NotifEvent', (e) => {
+      this.getNotification();
+});
   },
     created(){
       this.getProducts();
+      this.getNotification();
       this.GetStoreProducts();//??
     },
     data(){
       return {
         products:[],
         StoreProducts:[],
-        ShowAddCommande:0
+        ShowAddCommande:0,
+        Notifications:[]
       }
     },
     methods:{
         GetStoreProducts(){
             this.StoreProducts=JSON.parse(localStorage.getItem("products"))??[];//??
         },
+        getNotification(){
+        NotifService.getNotif(this.store.user['id']).then((res)=>{
+           this.Notifications=res.data.data;
+        })
+      },
         Logout(){
           this.store.logout();
           this.$router.push({name:"signin"});
@@ -274,3 +300,14 @@ export default {
 
 </script>
 
+<style>
+.notif{
+  cursor: pointer;
+}
+
+.Scroll_contianer{
+  max-height: 200px;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+</style>

@@ -25,5 +25,7 @@ export default
     getUsers(){
         return axios.get("/Users");
     },
-
+    getNotif(id){
+        return axios.get("/getNotif/"+id);
+    }
 }

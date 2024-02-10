@@ -46,3 +46,5 @@ Route::put('/UpdateUser/{id}', [UserApiController::class,'UpdateCommande']);
 Route::get('/getUserById/{id}',[UserApiController::class,'getUserById']);
 
 route::post('/login',[logincontroller::class,'LoginUser']);
+
+route::get('/getNotif/{id}',[UserApiController::class,'GetNotif']);

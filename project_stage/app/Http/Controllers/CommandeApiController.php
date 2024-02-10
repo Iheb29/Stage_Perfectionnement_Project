@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotifEvent;
 use App\Models\ligneCommande;
+use App\Models\notification;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\commande;
 
@@ -40,7 +43,15 @@ class CommandeApiController extends Controller
             $lignCommande->save();
         }
 
-        return response()->json(["data" => $commande], 201);
+        $user=User::where("IsAdmin",1)->get();
+        $notif=new notification();
+        $notif->message= $request->user['nom']." Add Commande";
+        $notif->user_id=  $user[0]->id;
+        $notif->save();
+
+        broadcast(new NotifEvent("test"));
+        
+        return response()->json(["data" => $commande  ], 201);
 
     }
     public function deleteCommande($id)
@@ -61,6 +72,14 @@ class CommandeApiController extends Controller
         $commandes->update([
             "status" => 1,
         ]);
+
+        $user=User::find($commandes->user_id);
+
+        $notif=new notification();
+        $notif->message= "Commande With ".$commandes->code_commande." Accepted";
+        $notif->user_id= $user->id;
+        $notif->save();
+        broadcast(new NotifEvent("test"));
         return response()->json(["message" => "Update Commande Accepted"], 200);
     }
 
@@ -70,6 +89,14 @@ class CommandeApiController extends Controller
         $commandes->update([
             "status" => 2,
         ]);
+        $user=User::find($commandes->user_id);
+
+        $notif=new notification();
+        $notif->message= "Commande With ".$commandes->code_commande." Rejected";
+        $notif->user_id= $user->id;
+        $notif->save();
+        broadcast(new NotifEvent("test"));
+
         return response()->json(["message" => "Update Commande Rejected"], 200);
     }
     public function getCommandeById($id)
@@ -82,5 +109,5 @@ class CommandeApiController extends Controller
         $commandes = commande::with("lignecommande")->where("user_id",$id)->get();
         return response()->json(["data" => $commandes], 200);
     }
-    //
+  
 }
